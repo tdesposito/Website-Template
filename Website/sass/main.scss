@@ -1,0 +1,43 @@
+//!––––––––––––––––––––––––––––––––––––––––––––––––––----------------------
+// This controls generation of your CSS.
+//
+// Follow the instructions below.
+
+//!––––––––––––––––––––––––––––––––––––––––––––––––––----------------------
+// Set your colors
+$color-primary: #000;
+$background-primary: #fff;
+$color-secondary: #f00;
+$background-secondary: #00f;
+$color-tertiary: #ff0;
+$background-tertiary: #0ff;
+$a11y_level: 'AAA';
+
+//!––––––––––––––––––––––––––––––––––––––––––––––––––----------------------
+// Set your font stack(s)
+// Don't forget corresponding links in index.html
+$font-primary: sans-serif;
+$font-secondary: sans-serif;
+
+//!––––––––––––––––––––––––––––––––––––––––––––––––––----------------------
+// REQUIRED! Skip to the next step, below.
+@import 'lib/Base';
+
+//!––––––––––––––––––––––––––––––––––––––––––––––––––----------------------
+// Include the features you want.
+// @import 'lib/Blockquote';
+// @import 'lib/Button';
+// @import 'lib/Code';
+// @import 'lib/Divider';
+// @import 'lib/Form';
+// @import 'lib/Grid';
+// @import 'lib/Image';
+// @import 'lib/Link';
+// @import 'lib/List';
+// @import 'lib/Spacing';
+// @import 'lib/Table';
+// @import 'lib/Utility';
+
+//!––––––––––––––––––––––––––––––––––––––––––––––––––----------------------
+// Build and include your components. These are YOUR classes, etc.
+// @import 'components/{my_component_name_here}';
