@@ -5,4 +5,4 @@ A template for starting web projects, using the [create-ehproject](https://githu
 You can just clone this, but the intent it to install the create-ehproject tool
 and use IT to create and configure your new project.
 
-This is **VERY MUCH** a work in progress. Proceed with caution.
+This is **VERY MUCH** a work in progress. See [the Road Map](ROADMAP.md). Proceed with caution.
