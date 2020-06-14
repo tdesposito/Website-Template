@@ -40,7 +40,7 @@ function copyStaticFiles() {
 
 
 function htmlMinifyToBuild(cb) {
-  return src(`${cfg.ehTemplate.htmlSource}/*.html`)
+  return src(`${cfg.ehTemplate.htmlSource}/**/*.html`)
       .pipe(htmlmin({
         collapseWhitespace: true,
         minifyCSS: true,
@@ -49,14 +49,14 @@ function htmlMinifyToBuild(cb) {
 
 
 function imageMinifyToBuild() {
-  return src(`${cfg.ehTemplate.imgSource}/*.jpg`)
+  return src(`${cfg.ehTemplate.imgSource}/**/*.+(jpg|png)`)
     .pipe(image().on('error', (e) => console.log(e)))
     .pipe(dest(`${devDestination}/img`))
 }
 
 
 function imageMinifyToDev() {
-  return src(`${cfg.ehTemplate.imgSource}/*.jpg`)
+  return src(`${cfg.ehTemplate.imgSource}/*.+(jpg|png)`)
     .pipe(image().on('error', (e) => console.log(e)))
     .pipe(dest(`${devDestination}/img`))
 }
@@ -151,7 +151,7 @@ exports.dev = (cb) => {
 
 
 exports.publish = (cb) => {
-  // This deploys the site to the "alpha" site configuration
+  // This deploys the site to the "production" site configuration
   // TODO: Bump Version
   // TODO: Update sitemap
   if (cfg.ehTemplate.hosting === "s3hosted") {
