@@ -21,6 +21,7 @@ aren't dependant on "figuring out" what I've done.
     * We need a way to indicate where to put the version in the site source.
     * `npm-version` works on `package.json` but this may not be what we need.
 1. Add ElasticBeanstalk support
+1. Add support for file combining with [gulp-useref](https://www.npmjs.com/package/gulp-useref)
 
 ## To Do's
 
