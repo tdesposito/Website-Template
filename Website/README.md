@@ -3,7 +3,7 @@
 ## Directory Structure
 
 This is the directory structure for this repo. Build artifacts, tooling support,
-and so on are not included. Look for a README.md in each top-level subdir for
+and so on are not listed here. Look for a README.md in each top-level subdir for
 more details.
 ```
   /
