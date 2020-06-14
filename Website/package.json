@@ -16,8 +16,7 @@
       "production": {
       }
     },
-    "lambdas": [
-    ],
+    "lambdas": [],
     "httpPort": 8001,
     "htmlSource": "site",
     "imgSource": "assets",

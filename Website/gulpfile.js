@@ -34,6 +34,9 @@ function cleanBuildDir() {
 
 
 function copyStaticFiles() {
+  // TODO: specify robots, sitemap explicitly,
+  // TODO: pick out stuff in ${...static...} only that which we need
+  // TODO: this could be a filter or a pipe(src())
   return src(`${cfg.ehTemplate.htmlSource}/**/*`)
     .pipe(dest(`${cfg.ehTemplate.buildRoot}/`))
 }
