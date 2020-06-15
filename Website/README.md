@@ -1,4 +1,4 @@
-# {{project}} Website Source Repository
+# {{siteName}} Website Source Repository
 
 ## Directory Structure
 
