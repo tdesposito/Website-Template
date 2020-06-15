@@ -9,29 +9,17 @@ including the code repo, into their AWS account, and access the site's resources
 via an external role. Then, when the proverbial bus tolls its bell for me, they
 aren't dependant on "figuring out" what I've done.
 
-## Milestones
+## Milestones/To Dos
 
-1. Flesh out the template (see todo's below)
-1. Add more AWS automation
-    * Create the CodeCommit repository
-    * Create S3 buckets for s3-hosted sites.
-    * Create a CloudFront distribution.
-    * Link a Route53 zone record to the CloudFront distribution.
+1. Flesh out the template
+    * Flesh out sass/elements/*
 1. Add site versioning.
     * We need a way to indicate where to put the version in the site source.
     * `npm-version` works on `package.json` but this may not be what we need.
 1. Add ElasticBeanstalk support
 1. Add support for file combining with [gulp-useref](https://www.npmjs.com/package/gulp-useref)
-
-## To Do's
-
-### sass
-
-* Flesh out the lib/\_{element}.scss stuff
-
-### gulpfile.js
-
-* Download and extract the template.
-    * Update the site's README.md with the project name.
-* Automate creation of the icon pack. See [gulp-favicons](https://www.npmjs.com/package/gulp-favicons)
-* Automate sitemap creation/update. See [sitemap-generator-cli](https://www.npmjs.com/package/sitemap-generator-cli)
+1. Automate creation of the icon pack. See [gulp-favicons](https://www.npmjs.com/package/gulp-favicons)
+1. Automate sitemap creation/update. See [sitemap-generator-cli](https://www.npmjs.com/package/sitemap-generator-cli)
+1. Automate creation of the site image (${siteURL}/rc/img/site_image.jpg)
+1. Testing
+    * Submit to [Google Structured Data Test](https://search.google.com/structured-data/testing-tool/u/0/#url=...)

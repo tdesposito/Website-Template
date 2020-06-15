@@ -4,6 +4,8 @@ These files are used to generate the CSS for the site.
 
 We use [Sass](https://sass-lang.com) as our source language.
 
+We've cherry-picked ideas and code from [Milligram](https://milligram.io).
+
 ## Making Changes
 Generally, confine changes to `main.scss` and files in `components/`.
 

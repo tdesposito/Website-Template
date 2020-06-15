@@ -2,10 +2,10 @@
 <html lang="en" dir="ltr">
   <head>
     <!-- ## site settings:  -->
-    <link rel="canonical" href="https://thespoondoorcounty.com">
+    <link rel="canonical" href="${siteURL}">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="An Eatery & Frozen Yogurt Bar in Sturgeon Bay, Wisconsin">
+    <meta name="description" content="${siteDescription}">
 
     <!-- ## site icon: -->
     <link rel="manifest" href="/rc/icon/site.webmanifest">
@@ -18,9 +18,9 @@
     <meta name="theme-color" content="#ffffff">
 
     <!-- ## Schema.org tags (SEO) -->
-    <meta itemprop="name" content="{{$SiteName}}"/>
-    <meta itemprop="url" content="{{$SiteURL}}">
-    <meta itemprop="description" content="{{$SiteDescription}}">
+    <meta itemprop="name" content="${siteName}"/>
+    <meta itemprop="url" content="${siteURL}">
+    <meta itemprop="description" content="${siteDescription}">
     <script type="application/ld+json">
     {
       "@context": "http://schema.org",
@@ -29,11 +29,11 @@
     </script>
 
     <!-- ## OpenGraph tags (Facebook/Twitter/etc)-->
-    <meta property="og:title" content="{{$SiteName}}">
-    <meta property="og:url" content="{{$SiteURL}}">
+    <meta property="og:title" content="${siteName}">
+    <meta property="og:url" content="${siteURL}">
     <meta property="og:type" content="website">
-    <meta property="og:description" content="{{$SiteDescription}}">
-    <meta name="twitter:card" content="{{$SiteURL}}/rc/img/site_image.jpg">
+    <meta property="og:description" content="${siteDescription}">
+    <meta name="twitter:card" content="${siteURL}/rc/img/site_image.jpg">
 
     <!-- ## CSS/font config: -->
   </head>

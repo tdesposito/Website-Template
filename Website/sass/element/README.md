@@ -1,4 +1,4 @@
-## sass/lib
+## sass/element
 
 These style each individual HTML element.
 

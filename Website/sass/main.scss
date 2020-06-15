@@ -21,22 +21,22 @@ $font-secondary: sans-serif;
 
 //!––––––––––––––––––––––––––––––––––––––––––––––––––----------------------
 // REQUIRED! Skip to the next step, below.
-@import 'lib/Base';
+@import 'element/Base';
 
 //!––––––––––––––––––––––––––––––––––––––––––––––––––----------------------
-// Include the features you want.
-// @import 'lib/Blockquote';
-// @import 'lib/Button';
-// @import 'lib/Code';
-// @import 'lib/Divider';
-// @import 'lib/Form';
-// @import 'lib/Grid';
-// @import 'lib/Image';
-// @import 'lib/Link';
-// @import 'lib/List';
-// @import 'lib/Spacing';
-// @import 'lib/Table';
-// @import 'lib/Utility';
+// Include the elements you want.
+// @import 'element/Blockquote';
+// @import 'element/Button';
+// @import 'element/Code';
+// @import 'element/Divider';
+// @import 'element/Form';
+// @import 'element/Grid';
+// @import 'element/Image';
+// @import 'element/Link';
+// @import 'element/List';
+// @import 'element/Spacing';
+// @import 'element/Table';
+// @import 'element/Utility';
 
 //!––––––––––––––––––––––––––––––––––––––––––––––––––----------------------
 // Build and include your components. These are YOUR classes, etc.
