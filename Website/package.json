@@ -1,9 +1,9 @@
 {
-  "name": "FIXME",
+  "name": "{{packageName}}-website",
   "version": "1.0.0",
-  "description": "FIXME",
+  "description": "{{siteDescription}}",
   "main": "index.js",
-  "repository": "FIXME",
+  "repository": "{{repoURL}}",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
