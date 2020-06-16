@@ -10,6 +10,7 @@
   "author": "Todd D. Esposito <todd@espositoholdings.com> (https://espositoholdings.com)",
   "license": "UNLICENSED",
   "ehTemplate": {
+    "comment": "See https://github.com/tdesposito/Website-Template#website-template for info on this section.",
     "type": "{{projectType}}"
     "roleARN": "{{roleARN}}"
     "hosting": "{{projectHosting}}"
