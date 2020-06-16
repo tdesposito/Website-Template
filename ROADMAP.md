@@ -23,3 +23,5 @@ aren't dependant on "figuring out" what I've done.
 1. Automate creation of the site image (${siteURL}/rc/img/site_image.jpg)
 1. Testing
     * Submit to [Google Structured Data Test](https://search.google.com/structured-data/testing-tool/u/0/#url=...)
+    * Add `gulp start:alpha` to launch the alpha site.
+    * Add `gulp start:production` to launch the production site.

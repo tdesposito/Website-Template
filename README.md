@@ -1,6 +1,6 @@
 # Website-Template
 
-A template for starting web projects, using the [create-ehproject](https://github.com/tdesposito/EH-CreateProject).
+A template for starting web projects, using the [create-ehproject tool](https://github.com/tdesposito/EH-CreateProject).
 
 You can just clone this, but the intent it to install the create-ehproject tool
 and use IT to create and configure your new project.
