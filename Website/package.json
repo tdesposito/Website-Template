@@ -10,6 +10,9 @@
   "author": "Todd D. Esposito <todd@espositoholdings.com> (https://espositoholdings.com)",
   "license": "UNLICENSED",
   "ehTemplate": {
+    "type": "{{projectType}}"
+    "roleARN": "{{roleARN}}"
+    "hosting": "{{projectHosting}}"
     "environments": {
       "alpha": {
       },
