@@ -16,6 +16,7 @@ aren't dependant on "figuring out" what I've done.
 1. Add site versioning.
     * We need a way to indicate where to put the version in the site source.
     * `npm-version` works on `package.json` but this may not be what we need.
+1. Add JSON-LD to the template.
 1. Add ElasticBeanstalk support
 1. Add support for file combining with [gulp-useref](https://www.npmjs.com/package/gulp-useref)
 1. Automate creation of the icon pack. See [gulp-favicons](https://www.npmjs.com/package/gulp-favicons)
