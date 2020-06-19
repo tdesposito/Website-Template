@@ -11,14 +11,12 @@
   "license": "UNLICENSED",
   "ehTemplate": {
     "comment": "See https://github.com/tdesposito/Website-Template#website-template for info on this section.",
-    "type": "{{projectType}}"
-    "roleARN": "{{roleARN}}"
-    "hosting": "{{projectHosting}}"
+    "type": "{{projectType}}",
+    "roleARN": "{{roleARN}}",
+    "hosting": "{{projectHosting}}",
     "environments": {
-      "alpha": {
-      },
-      "production": {
-      }
+      "alpha": {},
+      "production": {}
     },
     "lambdas": [],
     "httpPort": 8001,
