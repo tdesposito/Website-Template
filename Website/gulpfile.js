@@ -22,7 +22,10 @@ const htmlmin = require('gulp-htmlmin')
 var browserSync = require('browser-sync').create()
 
 var cfg = JSON.parse(fs.readFileSync('./package.json'))
-const devDestination = `${cfg.ehTemplate.htmlSource}/${cfg.ehTemplate.staticDir}`
+var devDestination = `${cfg.ehTemplate.htmlSource}/${cfg.ehTemplate.staticDir}`
+if (cfg.ehTemplate.type === "eleventy") {
+  devDestination = `${cfg.ehTemplate.buildRoot}/${cfg.ehTemplate.staticDir}`
+}
 const buildDestination = `${cfg.ehTemplate.buildRoot}/${cfg.ehTemplate.staticDir}`
 
 //#############################################################################
