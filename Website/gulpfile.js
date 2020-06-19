@@ -144,11 +144,27 @@ exports.deploy = (cb) => {
 
 
 exports.dev = (cb) => {
-  browserSync.init({ server : { baseDir: cfg.ehTemplate.htmlSource }, port: cfg.ehTemplate.httpPort || 8080 })
+  switch (cfg.ehTemplate.type) {
+    case "static":
+      browserSync.init({ server : { baseDir: cfg.ehTemplate.htmlSource }, port: cfg.ehTemplate.httpPort || 8080 })
+      watch(`${cfg.ehTemplate.htmlSource}/**/*.(html|png|jpg)`).on('change', browserSync.reload)
+      break
+    case "eleventy":
+      execa('npx', ['@11ty/eleventy',
+        '--serve',
+        `--input=${cfg.ehTemplate.htmlSource}`,
+        `--output=${cfg.ehTemplate.buildRoot}`,
+        `--port=${cfg.ehTemplate.httpPort}`,
+      ])
+      break
+    default:
+      console.log(`I don't know how handle ${cfg.ehTemplate.type} sites yet. Sorry.`)
+      break
+  }
+
   watch(`${cfg.ehTemplate.sassSource}/**/*.scss`, {ignoreInitial: false}, sassCompileToDev)
   watch(`${cfg.ehTemplate.jsSource}/**/*.js`, {ignoreInitial: false}, jsCompileToDev)
   watch(`${cfg.ehTemplate.imgSource}/*.jpg`, {ignoreInitial: false}, imageMinifyToBuild)
-  watch(`${cfg.ehTemplate.htmlSource}/**/*.(html|png|jpg)`).on('change', browserSync.reload)
   // TODO: watch(`${cfg.ehTemplate.imgSource}/icon/logo.jpg`, {ignoreInitial: true}, createIconPack)
 }
 
