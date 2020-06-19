@@ -103,7 +103,7 @@ function sassCompileToDev() {
 
 function syncS3(cfg, envcfg) {
   console.log('Syncing to s3...')
-  execSync(`aws s3 sync ${cfg.ehTemplate.buildRoot} ${envcfg.bucket} --delete --acl public-read --profile ${cfg.ehTemplate.awsProfileName}`)
+  execSync(`aws s3 sync ${cfg.ehTemplate.buildRoot} s3://${envcfg.bucket} --delete --acl public-read --profile ${cfg.ehTemplate.awsProfileName}`)
   if (envcfg.distribution) {
     console.log("Invalidating site in CloudFront...")
     execSync(`aws cloudfront create-invalidation --distribution-id ${envcfg.distribution} --paths "/*" --profile ${cfg.ehTemplate.awsProfileName}`)
