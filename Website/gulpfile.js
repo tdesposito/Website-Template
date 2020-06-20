@@ -11,8 +11,7 @@
 const { dest, parallel, series, src, watch } = require('gulp')
 const { exec, execSync } = require('child_process')
 const fs = require('fs');
-const babel = require('gulp-babel')
-const uglify = require('gulp-uglify')
+const terser = require('gulp-terser')
 const rename = require('gulp-rename')
 const sass = require('gulp-sass')
 const image = require('gulp-image')
@@ -70,9 +69,8 @@ function imageMinifyToDev() {
 
 function jsCompileToBuild() {
   return src(`${cfg.ehTemplate.jsSource}/*.js`)
-    .pipe(babel())
+    .pipe(terser())
     .pipe(rename({ extname: '.min.js' }))
-    .pipe(uglify())
     .pipe(src(`${cfg.ehTemplate.jsSource}/vendor/*.min.js`))
     .pipe(dest(`${buildDestination}/js`))
     .pipe(browserSync.stream())
