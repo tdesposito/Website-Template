@@ -20,6 +20,10 @@ $font-primary: sans-serif;
 $font-secondary: sans-serif;
 
 //!––––––––––––––––––––––––––––––––––––––––––––––––––----------------------
+// You can change breakpoints in utils/_breakpoints.scss if needed.
+@import 'utils/Breakpoints';
+
+//!––––––––––––––––––––––––––––––––––––––––––––––––––----------------------
 // REQUIRED! Skip to the next step, below.
 @import 'element/Base';
 

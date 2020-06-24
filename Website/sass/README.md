@@ -15,7 +15,6 @@ these parameters will keep the site consistent and (hopefully) clean.
 
 #### Color parameters
 ```
-  // Step 1: Set your colors
   $color-primary: #000;
   $background-primary: #fff;
   $color-secondary: #f00;
@@ -44,13 +43,24 @@ Then, whenever you set colors inside a selector, use something like:
 ```
 #### Font parameters
 ```
-  // Step 2: Set your font stack(s)
-  // Don't forget corresponding links in index.html
   $font-primary: sans-serif;
   $font-secondary: sans-serif;
 ```
 Put your font stack(s) here. `$font-primary` is used for everything by default.
 `$font-secondary` is used for anything with `class="font-secondary"`.
+
+#### sass/utils/Breakpoints
+
+`sass/utils/\_Breakpoints.scss` contains mixins for building consistent media queries. Of course, add/adapt/augment to fit your needs. 
+
+Every time you want to write a `@media... ` instead write something like:
+```
+  @include on_small_screen {
+    img {
+      max-width: 100%;
+    }
+  }
+```
 
 #### sass/lib -- Elements
 We adhere to the least-possible-css philosophy, so we don't include the kitchen
