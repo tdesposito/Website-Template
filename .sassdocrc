@@ -1,0 +1,11 @@
+{
+  "autofill": [],
+  "package": {
+    "name": "eh-website-template",
+    "title": "EspositoHoldings Website Template",
+    "version": "1.0.0",
+    "license": "MIT",
+    "homepage": "https://github.com/tdesposito/Website-Template",
+    "description": "A template upon which to build websites, for use with the create-ehproject tool."
+  }
+}

@@ -1,5 +1,3 @@
-@import '../utils/a11y';
-
 // Set box-sizing globally to handle padding and border widths
 *,
 *:after,
@@ -15,8 +13,7 @@ html {
 
 // Default body styles
 body {
-  color: if($a11y_level == 'NO', $color-primary, a11y-color($color-primary, $background-primary, $a11y_level));
-  background-color: $background-primary;
+  @include colors($color-primary, $background-primary);
   font-family: $font-primary;
   font-size: 1.6em;
   font-weight: 300;

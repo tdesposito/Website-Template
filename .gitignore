@@ -1,3 +1,6 @@
+# SassDoc output
+sassdoc/
+
 # Logs
 logs
 *.log

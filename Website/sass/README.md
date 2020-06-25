@@ -27,20 +27,20 @@ These parameters include our primary, secondary and tertiary color sets.
 
 ##### Auto-accessibility adjustments
 By default, we run the colors defined here through an accessibility adjustment
-tools (see `sass/lib/utils/_a11y.scss`), so the colors you specify may not be
+tools (see `sass/utils/_a11y.scss`), so the colors you specify may not be
 exactly what you get, but it WILL be more accessible than maybe it would have
 been.
 
  Set `$a11y_level` to:
-  * 'NO' for no change
   * 'AA' for good contrast score.
   * 'AAA' for maximum contrast score
+  * 'NO' for no change (actually, anything but 'AA' or 'AAA')
 
-Then, whenever you set colors inside a selector, use something like:
+Then, whenever you set colors inside a selector, use our handy mixin:
 ```
-  color: if($a11y_level == 'NO', $color-primary, a11y-color($color-primary, $background-primary, $a11y_level));
-  background-color: $background-primary;
+  @include colors($color-primary, $background-primary);
 ```
+
 #### Font parameters
 ```
   $font-primary: sans-serif;
@@ -51,7 +51,7 @@ Put your font stack(s) here. `$font-primary` is used for everything by default.
 
 #### sass/utils/Breakpoints
 
-`sass/utils/\_Breakpoints.scss` contains mixins for building consistent media queries. Of course, add/adapt/augment to fit your needs. 
+`sass/utils/\_Breakpoints.scss` contains mixins for building consistent media queries. Of course, add/adapt/augment to fit your needs.
 
 Every time you want to write a `@media... ` instead write something like:
 ```

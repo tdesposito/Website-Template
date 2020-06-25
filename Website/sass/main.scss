@@ -1,47 +1,81 @@
-//!––––––––––––––––––––––––––––––––––––––––––––––––––----------------------
-// This controls generation of your CSS.
-//
-// Follow the instructions below.
+////
+/// This file controls generation of your CSS.
+///
+/// Here we set the majority of our global options (such as colors and fonts)
+/// and include those elements, utilities and componts we need to fully style the
+/// site.
+////
 
-//!––––––––––––––––––––––––––––––––––––––––––––––––––----------------------
-// Set your colors
+/// The primary foreground color
+/// @name color-primary
+/// @group color control
 $color-primary: #000;
+
+/// The primary background color
+/// @name background-primary
+/// @group color control
 $background-primary: #fff;
+
+/// The secondary foreground color
+/// @name color-secondary
+/// @group color control
 $color-secondary: #f00;
+
+/// The secondary background color
+/// @name background-secondary
+/// @group color control
 $background-secondary: #00f;
+
+/// The third foreground color
+/// @name color-tertiary
+/// @group color control
 $color-tertiary: #ff0;
+
+/// The third background color
+/// @name background-tertiary
+/// @group color control
 $background-tertiary: #0ff;
+
+/// The color Assessibility level
+/// - 'AA' to target a "good" A11y scores
+/// - 'AAA' to target a "better" A11y scores
+/// - Anything else to disable auto-a11y adjustments
+/// @name a11y_level
+/// @type String
+/// @group color control
 $a11y_level: 'AAA';
 
-//!––––––––––––––––––––––––––––––––––––––––––––––––––----------------------
-// Set your font stack(s)
-// Don't forget corresponding links in index.html
+/// The primary (default) font stack.
+/// Everything will be in this font unless you chagne it.
+/// @group font control
 $font-primary: sans-serif;
+
+/// The secondary font stack.
+/// Enable this stack by adding `font-secondary` to any element's classes.
+/// @group font control
 $font-secondary: sans-serif;
 
-//!––––––––––––––––––––––––––––––––––––––––––––––––––----------------------
-// You can change breakpoints in utils/_breakpoints.scss if needed.
-@import 'utils/Breakpoints';
-
-//!––––––––––––––––––––––––––––––––––––––––––––––––––----------------------
 // REQUIRED! Skip to the next step, below.
+@import 'util/Breakpoints';
+@import 'util/Colors';
 @import 'element/Base';
 
 //!––––––––––––––––––––––––––––––––––––––––––––––––––----------------------
-// Include the elements you want.
+// Include the HTML elements you use.
 // @import 'element/Blockquote';
 // @import 'element/Button';
 // @import 'element/Code';
-// @import 'element/Divider';
+// @import 'element/Hr';
+// @import 'element/Footer';
 // @import 'element/Form';
-// @import 'element/Grid';
-// @import 'element/Image';
+// @import 'element/Header';
+// @import 'element/Img';
 // @import 'element/Link';
 // @import 'element/List';
-// @import 'element/Spacing';
+// @import 'element/Main';
 // @import 'element/Table';
-// @import 'element/Utility';
 
 //!––––––––––––––––––––––––––––––––––––––––––––––––––----------------------
 // Build and include your components. These are YOUR classes, etc.
-// @import 'components/{my_component_name_here}';
+// @import 'component/{my_component_name_here}';
+// i.e. @import 'component/Wrapper';

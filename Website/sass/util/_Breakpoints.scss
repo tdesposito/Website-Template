@@ -1,0 +1,45 @@
+/// Generates media queries for small screens.
+///
+/// Using this mixin gives us "self-documenting" code (to the extent that's
+/// possible), and a single place to set our breakpoints.
+/// @group Media Queries
+/// @example  scss - Usage
+///   @include on_small_screen {
+///     .column-container {
+///       grid-template-columns: 1;
+///     }
+///   }
+/// @example css - Output
+///   @media screen and (max-width: 45rem) {
+///     .column-container {
+///       grid-template-columns: 1;
+///     }
+///  }
+@mixin on_small_screen() {
+  @media screen and (max-width: 45rem) {
+    @content
+  }
+};
+
+/// Generates media queries for large screens.
+///
+/// Using this mixin gives us "self-documenting" code (to the extent that's
+/// possible), and a single place to set our breakpoints.
+/// @group Media Queries
+/// @example  scss - Usage
+///   @include on_small_screen {
+///     .column-container {
+///       grid-template-columns: repeat(4, 1fr);
+///     }
+///   }
+/// @example css - Output
+///   @media screen and (max-width: 45rem) {
+///     .column-container {
+///       grid-template-columns: repeat(4, 1fr);
+///     }
+///  }
+@mixin on_large_screen {
+  @media screen and (min-width: 900px) {
+    @content
+  }
+};

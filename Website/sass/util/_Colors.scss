@@ -1,0 +1,22 @@
+@import 'utils/a11y';
+
+/// Sets fg/bg colors, with a11y adjustment described by `$a11y_level`
+///
+/// @group color control
+/// @param {fg} $fg foregound color to use
+/// @param {bg} $bg background color to use
+/// @see a11y_level
+/// @example  scss - Usage
+///   body {
+///     @include colors(red, white)
+///   }
+/// @example css - Output
+///   body {
+///     color: red;
+///     background-color: white;
+///   }
+///
+@mixin colors($fg, $bg) {
+  color: if($a11y_level == 'NO', $fg, a11y-color($fg, $bg, $a11y_level));
+  background-color: $bg;
+}
