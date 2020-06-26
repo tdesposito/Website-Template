@@ -26,9 +26,27 @@ already have, naturally.
   * `npm install -g serverless` to get [Serverless](https://serverless.com) to manage the Lambda functions, if you're using them.
   * Optionally edit `ehTemplate.httpPort` in `package.json` to change the dev server's port from 8001.
 
+## Configuration
+All configuration for gulp is under the `ehTemplate` key in `package.json`.
+
+Key | Specifies
+--- | ---------
+type | Project type (static, eleventy, ...). Influences dev and build pipelines.
+hosting | Either 's3hosted' or 'ElasticBeanstalk'. So far.
+roleARN | The ARN of the external role for the client (or empty).
+httpPort | Port for the dev server (default: 8001). If you work on several projects, assign each one it's own port (there are plenty available, after all) to avoid conflicts when working concurrently.
+htmlSource | Whence source documents (default: `site`). For `static` sites, this is vanilla HTML. For `eleventy`, this is eleventy-supported source, such as MD, HTML, NJK, etc.
+imgSource | Whence png and jpg images (default: `assets`).
+jsSource | Whence JavaScript source code (default: `jssrc`).
+sassSource | Whence Sass source code (default: `sass`).
+staticDir | Subdir to create for compiled static resources (default: `static`).
+serverDir | Temp dir from which to serve dev content (default: `temp`).
+buildRoot | Target for the `build` task. Used as source for `deploy` and `publish` tasks.
+
+
 ## Development - Stuff you can run
 Once the tooling is in place, from the cloned repo, you can run:
-  * `gulp dev` - launches a test server (with live-reload), starts your site and watches for changes.
+  * `gulp` (or `gulp dev`) - launches a test server (with live-reload), starts your site and watches for changes.
   * `gulp clean` - cleans the `build/` directory.
   * `gulp build` - creates a production build in `build/`.
   * `gulp --series build deploy` - builds then deploys to your ALPHA (testing) environment.

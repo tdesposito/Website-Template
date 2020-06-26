@@ -24,13 +24,13 @@
     "imgSource": "assets",
     "jsSource": "jssrc",
     "sassSource": "sass",
-    "buildRoot": "build",
-    "staticDir": "static"
+    "staticDir": "static",
+    "serverDir": "temp",
+    "buildRoot": "build"
   },
   "devDependencies": {
     "browser-sync": "^2.26.7",
     "gulp": "^4.0.2",
-    "gulp-babel": "^8.0.0",
     "gulp-htmlmin": "^5.0.1",
     "gulp-image": "^6.2.0",
     "gulp-rename": "^2.0.0",
