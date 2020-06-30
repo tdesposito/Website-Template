@@ -42,6 +42,9 @@ sassSource | Whence Sass source code (default: `sass`).
 staticDir | Subdir to create for compiled static resources (default: `static`).
 serverDir | Temp dir from which to serve dev content (default: `temp`).
 buildRoot | Target for the `build` task. Used as source for `deploy` and `publish` tasks.
+extraFiles | Array of extra files to copy from `htmlSource` to `buildRoot` (default: ["robots.txt", "sitemap.xml"]).
+lambdas | List of lambda functions to auto-deploy. **Not yet implemented.**
+s3Exclude | String specifying files to exclude from the sync to s3.
 
 
 ## Development - Stuff you can run

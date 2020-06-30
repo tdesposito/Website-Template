@@ -11,22 +11,24 @@
   "license": "UNLICENSED",
   "ehTemplate": {
     "comment": "See https://github.com/tdesposito/Website-Template#website-template for info on this section.",
-    "type": "{{projectType}}",
-    "roleARN": "{{roleARN}}",
-    "hosting": "{{projectHosting}}",
+    "awsProfileName": "{{profile}}",
+    "buildRoot": "build",
     "environments": {
       "alpha": {},
       "production": {}
     },
-    "lambdas": [],
-    "httpPort": 8001,
+    "extraFiles": ["robots.txt", "sitemap.xml"],
+    "hosting": "{{projectHosting}}",
     "htmlSource": "site",
+    "httpPort": 8001,
     "imgSource": "assets",
     "jsSource": "jssrc",
+    "lambdas": [],
+    "roleARN": "{{roleARN}}",
     "sassSource": "sass",
-    "staticDir": "static",
     "serverDir": "temp",
-    "buildRoot": "build"
+    "staticDir": "static",
+    "type": "{{projectType}}"
   },
   "devDependencies": {
     "browser-sync": "^2.26.7",
