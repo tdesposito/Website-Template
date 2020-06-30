@@ -52,5 +52,5 @@ Once the tooling is in place, from the cloned repo, you can run:
   * `gulp` (or `gulp dev`) - launches a test server (with live-reload), starts your site and watches for changes.
   * `gulp clean` - cleans the `build/` directory.
   * `gulp build` - creates a production build in `build/`.
-  * `gulp --series build deploy` - builds then deploys to your ALPHA (testing) environment.
-  * `gulp --series build publish` - builds then deploys to your PRODUCTION environment.
+  * `gulp deploy` - deploys the as-built site to your ALPHA (testing) environment.
+  * `gulp publish` - deploys the as-built site to your PRODUCTION environment.
