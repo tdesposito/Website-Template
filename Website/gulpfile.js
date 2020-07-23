@@ -4,7 +4,7 @@
  * Configuration is under the "ehTemplate" key in package.json
  *
  * @author Todd D. Esposito <todd@espositoholdings.com>
- * @version 1.0.0
+ * @version 1.1.0
  * @copyright Todd D. Esposito 2020
  * @license MIT
  */
@@ -12,6 +12,7 @@
  const { exec, execSync } = require('child_process')
  const del = require('del')
  const fs = require('fs')
+ const https = require('https')
 
 const { dest, parallel, series, src, watch } = require('gulp')
 const htmlmin = require('gulp-htmlmin')
@@ -167,15 +168,18 @@ function syncS3(cfg, envcfg) {
  *
  * @module build
  */
-exports.build = async (cb) => {
+exports.build = (cb) => {
   setRunMode('build')
-  await cleanBuildDir()
-  await copyExtraFiles()
-  await sassCompile()
-  await jsCompile()
-  await htmlCompile()
-  await imageCompile()
-  cb()
+  return series(
+    cleanBuildDir,
+    parallel(
+      sassCompile,
+      jsCompile,
+      imageCompile,
+      htmlCompile,
+    ),
+    copyExtraFiles,
+  )(cb)
 }
 
 
@@ -185,8 +189,7 @@ exports.build = async (cb) => {
  * @module clean
  */
 exports.clean = async (cb) => {
-  await cleanBuildDir()
-  cb()
+  cleanBuildDir(cb)
 }
 
 
@@ -250,5 +253,44 @@ exports.publish = (cb) => {
   } else {
     console.log("I don't yet know how to handle the hosting type indicated in package.json. Aborting.")
   }
+  cb()
+}
+
+/**
+ * updates THIS GULPFILE from the template source
+ *
+ * @module update
+ */
+exports.update = (cb) => {
+  const url = "https://raw.githubusercontent.com/tdesposito/Website-Template/master/Website/gulpfile.js"
+  const outfile = fs.createWriteStream("new-gulpfile.js")
+  const req = https.get(url, (rsp) => {
+    if (rsp.statusCode === 200) {
+      rsp.pipe(outfile)
+      outfile.on('finish', () => {
+        outfile.close()
+        fs.copyFileSync("new-gulpfile.js", "gulpfile.js")
+        fs.unlinkSync("new-gulpfile.js")
+        console.log('Updated gulpfile.js')
+        cb()
+      })
+    } else {
+      console.error(`Could not download new file: ${rsp.statusCode}`)
+      cb()
+    }
+  }).on('error', (e) => {
+    console.error(e)
+    cb(e)
+  })
+}
+
+/**
+ * displays the version of THIS GULPFILE
+ *
+ * @module version
+ */
+exports.version = (cb) => {
+  const version = "1.1.0"
+  console.log(`EH-Gulpfile version ${version}`)
   cb()
 }

@@ -53,4 +53,11 @@ Once the tooling is in place, from the cloned repo, you can run:
   * `gulp clean` - cleans the `build/` directory.
   * `gulp build` - creates a production build in `build/`.
   * `gulp deploy` - deploys the as-built site to your ALPHA (testing) environment.
+  * `gulp --series build deploy` - builds then deploys to ALPHA.
   * `gulp publish` - deploys the as-built site to your PRODUCTION environment.
+  * `gulp version` - displays the version of the gulpfile itself.
+  * `gulp update` - update the gulpfile itself from the template.
+
+<sub><sup>
+Built from template version 1.0.1.
+</sub></sup>
