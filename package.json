@@ -1,0 +1,25 @@
+{
+  "name": "Website-Template",
+  "version": "1.1.0",
+  "description": "A template for starting web projects, using the create-ehproject tool.",
+  "main": "index.js",
+  "repository": "https://github.com/tdesposito/Website-Template.git",
+  "author": "Todd D. Esposito <todd@espositoholdings.com> (https://espositoholdings.com)",
+  "license": "MIT",
+  "ehVersioner": {
+    "targets": [
+      {
+        "file": "Website/gulpfile.js",
+        "search": " * @version {{version}}"
+      },
+      {
+        "file": "Website/gulpfile.js",
+        "search": "  const version = \"{{version}}\""
+      },
+      {
+        "file": "site/template/footer.inc.html",
+        "search": "Built from template version {{version}}."
+      }
+    ]
+  }
+}
