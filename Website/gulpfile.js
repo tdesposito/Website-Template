@@ -15,13 +15,22 @@
  const https = require('https')
 
 const { dest, parallel, series, src, watch } = require('gulp')
+const favicons = require('gulp-favicons')
 const htmlmin = require('gulp-htmlmin')
 const image = require('gulp-image')
 const rename = require('gulp-rename')
 const sass = require('gulp-sass')
 const terser = require('gulp-terser')
 
-var cfg = JSON.parse(fs.readFileSync('./package.json')).ehTemplate
+var pjson = JSON.parse(fs.readFileSync('./package.json'))
+var cfg = pjson.ehTemplate
+
+// These are a bit tricky, and need to be kept in sync, so here they live.
+// js and sass sources are not included -- no-premature-optimizations
+const srcpath = {
+  img: [`${cfg.imgSource}/**/*.{jpg,png}`, `!${cfg.imgSource}/icon/**`],
+  icon: `${cfg.imgSource}/icon/logo.png`,
+}
 
 /** clears out the build directory */
 function cleanBuildDir() {
@@ -36,8 +45,34 @@ function copyExtraFiles() {
 }
 
 
+/** Generates the icon set for the site */
+function createIconPack() {
+  const iconcfg = {
+    appName: pjson.name,
+    appShortName: pjson.name,
+    appDescription: pjson.description,
+    version: pjson.version,
+    path: `/${cfg.staticDir}/icon/`,
+    icons: {
+      android: true,
+      appleIcon: true,
+      appleStartup: false,
+      coast: false,
+      favicons: true,
+      firefox: false,
+      windows: false,
+      yandex: false,
+    },
+  }
+  var pipeline = src(srcpath.icon)
+      .pipe(favicons(iconcfg))
+      .pipe(dest(`${cfg.CompileStaticTo}/icon`))
+  return pipeline
+}
+
+
 /** Manipulate soure html (or whatever) for the target environment */
-async function htmlCompile() {
+function htmlCompile() {
   var htmlmincfg = {
     collapseWhitespace: true,
     minifyCSS: true,
@@ -61,11 +96,11 @@ async function htmlCompile() {
 
 /** Manipulate source images for the target environment */
 function imageCompile() {
-  var pipeline = src(`${cfg.imgSource}/**/*.{jpg,png}`)
+  var pipeline = src(srcpath.img)
     .pipe(image().on('error', (e) => console.log(e)))
     .pipe(dest(`${cfg.CompileStaticTo}/img`))
   // if (cfg.MODE === 'dev') {
-  //   pipline = pipeline.pipe(cfg.BrowserSync.reload())
+  //   pipeline = pipeline.pipe(cfg.BrowserSync.reload)
   // }
   return pipeline
 }
@@ -169,6 +204,7 @@ function syncS3(cfg, envcfg) {
  * @module build
  */
 exports.build = (cb) => {
+  // TODO: Bump Version ?
   setRunMode('build')
   return series(
     cleanBuildDir,
@@ -177,6 +213,7 @@ exports.build = (cb) => {
       jsCompile,
       imageCompile,
       htmlCompile,
+      createIconPack,
     ),
     copyExtraFiles,
   )(cb)
@@ -188,8 +225,8 @@ exports.build = (cb) => {
  *
  * @module clean
  */
-exports.clean = async (cb) => {
-  cleanBuildDir(cb)
+exports.clean = (cb) => {
+  return series(cleanBuildDir)(cb)
 }
 
 
@@ -212,10 +249,10 @@ exports.default = (cb) => {
       break
   }
 
-  watch(`${cfg.imgSource}/*.{jpg,png}`, {ignoreInitial: false}, imageCompile)
+  watch(srcpath.img, {ignoreInitial: false}, imageCompile)
   watch(`${cfg.sassSource}/**/*.scss`, {ignoreInitial: false}, sassCompile)
   watch(`${cfg.jsSource}/**/*.js`, {ignoreInitial: false}, jsCompile)
-  // TODO: watch(`${cfg.imgSource}/icon/logo.jpg`, {ignoreInitial: true}, createIconPack)
+  watch(srcpath.icon, {allowEmpty: true, ignoreInitial: true}, createIconPack)
 }
 exports.dev = exports.default
 
@@ -229,8 +266,7 @@ exports.deploy = (cb) => {
   // This deploys the site to the "alpha" site configuration
   // TODO: Bump Pre-Version
   if (cfg.hosting === "s3hosted") {
-    envcfg = cfg.environments.alpha
-    syncS3(cfg, envcfg)
+    syncS3(cfg, cfg.environments.alpha)
   } else {
     console.log("I don't yet know how to handle the hosting type indicated in package.json. Aborting.")
   }
@@ -245,11 +281,9 @@ exports.deploy = (cb) => {
  */
 exports.publish = (cb) => {
   // This deploys the site to the "production" site configuration
-  // TODO: Bump Version
   // TODO: Update sitemap
   if (cfg.hosting === "s3hosted") {
-    envcfg = cfg.environments.production
-    syncS3(cfg, envcfg)
+    syncS3(cfg, cfg.environments.production)
   } else {
     console.log("I don't yet know how to handle the hosting type indicated in package.json. Aborting.")
   }
