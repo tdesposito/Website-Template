@@ -254,6 +254,7 @@ exports.default = (cb) => {
   watch(`${cfg.jsSource}/**/*.js`, {ignoreInitial: false}, jsCompile)
   watch(srcpath.icon, {allowEmpty: true, ignoreInitial: true}, createIconPack)
 }
+// Just a little aliasing...
 exports.dev = exports.default
 
 
@@ -264,7 +265,6 @@ exports.dev = exports.default
  */
 exports.deploy = (cb) => {
   // This deploys the site to the "alpha" site configuration
-  // TODO: Bump Pre-Version
   if (cfg.hosting === "s3hosted") {
     syncS3(cfg, cfg.environments.alpha)
   } else {
