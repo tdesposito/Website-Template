@@ -1,6 +1,6 @@
 {
   "name": "Website-Template",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "A template for starting web projects, using the create-ehproject tool.",
   "main": "index.js",
   "repository": "https://github.com/tdesposito/Website-Template.git",
