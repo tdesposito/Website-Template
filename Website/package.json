@@ -32,6 +32,7 @@
   },
   "devDependencies": {
     "browser-sync": "^2.26.7",
+    "del": "^5.1.0",
     "gulp": "^4.0.2",
     "gulp-favicons": "^2.4.0",
     "gulp-htmlmin": "^5.0.1",
