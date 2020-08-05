@@ -12,16 +12,14 @@ aren't dependant on "figuring out" what I've done.
 ## Milestones/To Dos
 
 1. Flesh out the template
-    * Flesh out sass/elements/*
+    * **In progress:** Flesh out sass/elements/*
     * We are linking to /static/... in several places; templatize this (also in create-ehproject.)
     * Add ARIA tags where appropriate.
 1. Add site versioning.
-    * We need a way to indicate where to put the version in the site source.
-    * `npm-version` works on `package.json` but this may not be what we need.
-    * See [bumpytrack](https://pypi.org/project/bumpytrack/), but we need a node version.
+    * See maybe [eh-bumpversion](https://www.npmjs.com/package/eh-bumpversion)
 1. Add ElasticBeanstalk support to `gulpfile`
 1. Add support for file combining with [gulp-useref](https://www.npmjs.com/package/gulp-useref)
-1. Automate creation of the icon pack. See [gulp-favicons](https://www.npmjs.com/package/gulp-favicons)
+1. **Completed:** Automate creation of the icon pack. See [gulp-favicons](https://www.npmjs.com/package/gulp-favicons)
 1. Automate sitemap creation/update. See [sitemap-generator-cli](https://www.npmjs.com/package/sitemap-generator-cli)
 1. Automate creation of the site image at {{siteURL}}/{{static}}/img/site_image.jpg (referenced my meta-tag in index)
 1. Add pre-defined testing targets:
