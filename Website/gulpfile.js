@@ -9,7 +9,7 @@
  * @license MIT
  */
 
- const { exec, execSync } = require('child_process')
+ const { exec, execSync, spawn } = require('child_process')
  const del = require('del')
  const fs = require('fs')
  const https = require('https')
@@ -41,7 +41,12 @@ function cleanBuildDir() {
 
 /** copy files listed in package.json to the build dir */
 function copyExtraFiles() {
-  return src(cfg.extraFiles, {cwd: cfg.htmlSource, base: cfg.htmlSource})
+  return src(cfg.extraFiles, {cwd: cfg.htmlSource, base: cfg.htmlSource, allowEmpty: true})
+    .pipe(rename(path => {
+      if (path.dirname.startsWith('..')) {
+        path.dirname = path.dirname.replace(/\.\.[/\\]*/gi, '')
+      }
+    }))
     .pipe(dest(cfg.buildRoot))
 }
 
@@ -72,7 +77,15 @@ function createIconPack() {
 }
 
 
-/** Manipulate soure html (or whatever) for the target environment */
+/** Deploys the current build to ElasticBeanstalk */
+function ebDeploy(cfg, envcfg) {
+  console.log('not yet implimented')
+  // cwd: cfg.buildRoot
+  // eb deploy --label v${cfg.version}
+}
+
+
+/** Manipulate source html (or whatever) for the target environment */
 function htmlCompile() {
   var htmlmincfg = {
     collapseWhitespace: true,
@@ -87,9 +100,16 @@ function htmlCompile() {
   if (cfg.MODE === 'dev') {
     return cfg.BrowserSync.reload()
   } else {
-    pipeline = src(`${cfg.CompileTo}/**/*.html`)
+    var pipeline
+    switch (cfg.type) {
+      case 'flask':
+        pipeline = src([`${cfg.CompileTo}/**/*`, `!${cfg.CompileTo}/${cfg.staticDir}/**/*`])
+        break
+      default:
+        pipeline = src(`${cfg.CompileTo}/**/*.html`)
         .pipe(htmlmin(htmlmincfg))
-        .pipe(dest(cfg.buildRoot))
+    }
+    pipeline = pipeline.pipe(dest(cfg.buildRoot))
     return pipeline
   }
 }
@@ -168,8 +188,19 @@ function setRunMode(mode) {
         break
     }
     cfg.CompileStaticTo = `${cfg.CompileTo}/${cfg.staticDir}`
+
     cfg.BrowserSync = require('browser-sync').create()
-    cfg.BrowserSync.init({ server: cfg.CompileTo, port: cfg.httpPort || 8001, ui: false })
+    var bscfg = {}
+    bscfg = {
+      port: cfg.httpPort || 8001,
+      ui: {port: 4444},
+    }
+    if (cfg.type === 'flask') {
+      bscfg.proxy = `localhost:${cfg.flask.port}`
+    } else {
+      bscfg.server = cfg.CompileTo
+    }
+    cfg.BrowserSync.init(bscfg)
   } else {
     cfg.CompileFrom = cfg.htmlSource
     switch (cfg.type) {
@@ -246,8 +277,19 @@ exports.default = (cb) => {
     case "eleventy":
       watch(`${cfg.htmlSource}/**/*.{html,njk,md}`, {ignoreInitial: false}).on('change', htmlCompile)
       break
+    case "flask":
+      Object.keys(cfg.flask.envvars).forEach(k => {
+        process.env[k] = cfg.flask.envvars[k]
+      })
+      var flaskcmd = `flask run --port ${cfg.flask.port}`.split(' ')
+      if (cfg.flask.venv) {
+        cfg.flask.venv.split(' ').reverse().forEach(e => flaskcmd.unshift(e))
+      }
+      var flasksrv = spawn(flaskcmd[0], flaskcmd.slice(1), {stdio: 'inherit'})
+      watch(`${cfg.htmlSource}/**/*.{html,jinja2,j2}`).on('change', cfg.BrowserSync.reload)
+      break
     default:
-      console.log(`I don't know how serve ${cfg.type} sites yet. Sorry.`)
+      console.log(`\n\n\tI don't know how serve ${cfg.type} sites yet. Sorry.\n\n`)
       break
   }
 
@@ -267,10 +309,15 @@ exports.dev = exports.default
  */
 exports.deploy = (cb) => {
   // This deploys the site to the "alpha" site configuration
-  if (cfg.hosting === "s3hosted") {
-    syncS3(cfg, cfg.environments.alpha)
-  } else {
-    console.log("I don't yet know how to handle the hosting type indicated in package.json. Aborting.")
+  switch (cfg.hosting) {
+    case "s3hosted":
+      syncS3(cfg, cfg.environments.alpha)
+      break
+    case "elasticbeanstalk":
+      ebDeploy(cfg, cfg.environment.alpha)
+      break
+    default:
+      console.log(`I don't yet know how to handle ${cfg.hosting} hosting. Sorry.`)
   }
   cb()
 }
