@@ -17,7 +17,7 @@
 const { dest, parallel, series, src, watch } = require('gulp')
 const favicons = require('gulp-favicons')
 const htmlmin = require('gulp-htmlmin')
-const image = require('gulp-image')
+const image = require('gulp-imagemin')
 const rename = require('gulp-rename')
 const sass = require('gulp-sass')
 const terser = require('gulp-terser')
@@ -98,7 +98,7 @@ function htmlCompile() {
 /** Manipulate source images for the target environment */
 function imageCompile() {
   var pipeline = src(srcpath.img)
-    .pipe(image().on('error', (e) => console.log(e)))
+    .pipe(image({verbose: true}))
     .pipe(dest(`${cfg.CompileStaticTo}/img`))
   // if (cfg.MODE === 'dev') {
   //   pipeline = pipeline.pipe(cfg.BrowserSync.reload)
