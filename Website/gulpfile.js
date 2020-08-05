@@ -22,7 +22,6 @@ const rename = require('gulp-rename')
 const sass = require('gulp-sass')
 const terser = require('gulp-terser')
 
-var pjson = JSON.parse(fs.readFileSync('./package.json'))
 const pjson = require('./package.json')
 var cfg = pjson.ehTemplate
 
@@ -31,6 +30,7 @@ var cfg = pjson.ehTemplate
 const srcpath = {
   img: [`${cfg.imgSource}/**/*.{jpg,png,gif}`, `!${cfg.imgSource}/icon/**`],
   icon: `${cfg.imgSource}/icon/logo.png`,
+  video: `${cfg.imgSource}/**/*.mp4`,
 }
 
 /** clears out the build directory */
@@ -99,6 +99,7 @@ function htmlCompile() {
 function imageCompile() {
   var pipeline = src(srcpath.img)
     .pipe(image({verbose: true}))
+    .pipe(src(srcpath.video))
     .pipe(dest(`${cfg.CompileStaticTo}/img`))
   // if (cfg.MODE === 'dev') {
   //   pipeline = pipeline.pipe(cfg.BrowserSync.reload)
