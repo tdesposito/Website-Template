@@ -23,6 +23,7 @@ const sass = require('gulp-sass')
 const terser = require('gulp-terser')
 
 var pjson = JSON.parse(fs.readFileSync('./package.json'))
+const pjson = require('./package.json')
 var cfg = pjson.ehTemplate
 
 // These are a bit tricky, and need to be kept in sync, so here they live.
