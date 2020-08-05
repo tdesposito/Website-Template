@@ -29,7 +29,7 @@ var cfg = pjson.ehTemplate
 // These are a bit tricky, and need to be kept in sync, so here they live.
 // js and sass sources are not included -- no-premature-optimizations
 const srcpath = {
-  img: [`${cfg.imgSource}/**/*.{jpg,png}`, `!${cfg.imgSource}/icon/**`],
+  img: [`${cfg.imgSource}/**/*.{jpg,png,gif}`, `!${cfg.imgSource}/icon/**`],
   icon: `${cfg.imgSource}/icon/logo.png`,
 }
 
