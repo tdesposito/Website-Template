@@ -36,7 +36,6 @@ const srcpath = {
 /** clears out the build directory */
 function cleanBuildDir() {
   return del(cfg.buildRoot)
-  return del([`${cfg.buildRoot}/**/*`, `${cfg.buildRoot}/.*/**/*`])
 }
 
 
