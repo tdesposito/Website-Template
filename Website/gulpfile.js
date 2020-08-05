@@ -65,7 +65,7 @@ function createIconPack() {
       yandex: false,
     },
   }
-  var pipeline = src(srcpath.icon)
+  var pipeline = src(srcpath.icon, {allowEmpty: true})
       .pipe(favicons(iconcfg))
       .pipe(dest(`${cfg.CompileStaticTo}/icon`))
   return pipeline
