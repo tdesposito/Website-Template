@@ -4,7 +4,7 @@
  * Configuration is under the "ehTemplate" key in package.json
  *
  * @author Todd D. Esposito <todd@espositoholdings.com>
- * @version 1.3.0
+ * @version 1.3.1
  * @copyright Todd D. Esposito 2020
  * @license MIT
  */
@@ -390,7 +390,7 @@ exports.update = (cb) => {
  * @module version
  */
 exports.version = (cb) => {
-  const version = "1.3.0"
+  const version = "1.3.1"
   console.log(`EH-Gulpfile version ${version}`)
   cb()
 }
