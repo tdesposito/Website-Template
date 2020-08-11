@@ -31,8 +31,9 @@ All configuration for gulp is under the `ehTemplate` key in `package.json`.
 
 Key | Specifies
 --- | ---------
-type | Project type (static, eleventy, ...). Influences dev and build pipelines.
+type | Project type (static, eleventy, flask). Influences dev and build pipelines.
 hosting | Either 's3hosted' or 'ElasticBeanstalk'. So far.
+awsProfileName | Name of the AWS profile in ~/.aws/credentials.
 roleARN | The ARN of the external role for the client (or empty).
 httpPort | Port for the dev server (default: 8001).
 htmlSource | Whence source documents (default: `site`). For `static` sites, this is vanilla HTML. For `eleventy`, this is eleventy-supported source, such as MD, HTML, NJK, etc.
