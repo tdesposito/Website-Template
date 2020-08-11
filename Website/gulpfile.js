@@ -9,7 +9,7 @@
  * @license MIT
  */
 
- const { exec, execSync, spawn } = require('child_process')
+ const { exec, execSync, spawn, spawnSync } = require('child_process')
  const del = require('del')
  const fs = require('fs')
  const https = require('https')
@@ -79,9 +79,21 @@ function createIconPack() {
 
 /** Deploys the current build to ElasticBeanstalk */
 function ebDeploy(cfg, envcfg) {
-  console.log('not yet implimented')
-  // cwd: cfg.buildRoot
-  // eb deploy --label v${cfg.version}
+  var cmd = ['eb', 'deploy', envcfg.awsEnvironment]
+  if (cfg.awsProfileName) {
+    cmd.push('--profile')
+    cmd.push(cfg.awsProfileName)
+  }
+  if (envcfg.promoteFrom) {
+    cmd.push('--version')
+    var status = execSync(`eb status ${envcfg.promoteFrom}`, {cwd: cfg.buildRoot}).toString()
+    var running = status.match(/Deployed Version: (.*)/)[1]
+    cmd.push(running)
+  } else {
+    cmd.push('--label')
+    cmd.push(`v${pjson.version}`)
+  }
+  var deployproc = spawnSync(cmd[0], cmd.slice(1), {stdio: 'inherit', cwd: cfg.buildRoot})
 }
 
 
@@ -314,7 +326,7 @@ exports.deploy = (cb) => {
       syncS3(cfg, cfg.environments.alpha)
       break
     case "elasticbeanstalk":
-      ebDeploy(cfg, cfg.environment.alpha)
+      ebDeploy(cfg, cfg.environments.alpha)
       break
     default:
       console.log(`I don't yet know how to handle ${cfg.hosting} hosting. Sorry.`)
@@ -331,10 +343,15 @@ exports.deploy = (cb) => {
 exports.publish = (cb) => {
   // This deploys the site to the "production" site configuration
   // TODO: Update sitemap
-  if (cfg.hosting === "s3hosted") {
-    syncS3(cfg, cfg.environments.production)
-  } else {
-    console.log("I don't yet know how to handle the hosting type indicated in package.json. Aborting.")
+  switch (cfg.hosting) {
+    case "s3hosted":
+      syncS3(cfg, cfg.environments.production)
+      break
+    case "elasticbeanstalk":
+      ebDeploy(cfg, cfg.environments.production)
+      break
+    default:
+      console.log(`I don't yet know how to handle ${cfg.hosting} hosting. Sorry.`)
   }
   cb()
 }

@@ -2,7 +2,7 @@
 
 ## Directory Structure
 
-This is the directory structure for this repo. Build artifacts, tooling support,
+This is the directory structure for this repo. Build artifacts, tooling support
 and so on are not listed here. Look for a README.md in each top-level subdir for
 more details.
 ```
@@ -31,30 +31,64 @@ All configuration for gulp is under the `ehTemplate` key in `package.json`.
 
 Key | Specifies
 --- | ---------
-type | Project type (static, eleventy, flask). Influences dev and build pipelines.
-hosting | Either 's3hosted' or 'ElasticBeanstalk'. So far.
 awsProfileName | Name of the AWS profile in ~/.aws/credentials.
-roleARN | The ARN of the external role for the client (or empty).
+buildRoot | Target for the `build` task. Used as source for `deploy` and `publish` tasks.
+environments | Dictionary of the live environments to deploy/publish to. See notes below.
+extraFiles | Array of extra files to copy from `htmlSource` to `buildRoot` (default: ["robots.txt", "sitemap.xml"]). If you need files from a non-local directory (for example, a Python library not included directly in this directory), use RELATIVE path names, such as "../../MyLib/\**/*.py"
+hosting | Either 's3hosted' or 'ElasticBeanstalk'. So far.
+htmlSource | Whence source documents (default: `site`). See notes below.
 httpPort | Port for the dev server (default: 8001).
-htmlSource | Whence source documents (default: `site`). For `static` sites, this is vanilla HTML. For `eleventy`, this is eleventy-supported source, such as MD, HTML, NJK, etc.
 imgSource | Whence png and jpg images (default: `assets`).
 jsSource | Whence JavaScript source code (default: `jssrc`).
-sassSource | Whence Sass source code (default: `sass`).
-staticDir | Subdir to create for compiled static resources (default: `static`).
-serverDir | Temp dir from which to serve dev content (default: `temp`).
-buildRoot | Target for the `build` task. Used as source for `deploy` and `publish` tasks.
-extraFiles | Array of extra files to copy from `htmlSource` to `buildRoot` (default: ["robots.txt", "sitemap.xml"]). If you need files from a non-local directory (for example, a Python library not included directly in this directory), use RELATIVE path names, such as "../../MyLib/\**/*.py"
 lambdas | List of lambda functions to auto-deploy. **Not yet implemented.**
-s3Exclude | String specifying files to exclude from the sync to s3.
+roleARN | The ARN of the external role for the client (or empty).
+sassSource | Whence Sass source code (default: `sass`).
+serverDir | Temp dir from which to serve dev content (default: `temp`).
+staticDir | Subdir to create for compiled static resources (default: `static`).
+type | Project type (static, eleventy, flask). Influences dev and build pipelines.
 
-### Using Flask?
-You configure your Flask environment with the `flask` key under `ehTemplate`.
+### Hosting-specific Configuration
+
+#### s3hosted
+
+* `s3Exclude` holds a string specifying files to exclude from the sync to s3.
+* `environments` holds (under each subkey `alpha` and `production`):
+
+Key | Specifies
+--- | ---------
+bucket | S3 bucket name
+distribution | CloudFront Distribution ID to invalidate on deploy (optional)
+url | S3 bucket URL (optional) **currently unused, but I have plans for it**
+
+#### elasticbeanstalk
+
+* `gulp deploy` creates a new application bundle labeled with the current source version (from `package.json`), so be sure to bump your version prior to `gulp build`ing your site. If you don't, EB will try to use the EXISTING such bundle, and you'll shortly need Rogaine.
+* If you inlcude `promoteFrom` under `production` (see below), we'll use the same application bundle already running in your alpha environment. `promoteFrom` MUST contain the alpha Environment name for this to work. This is coded this way to allow for more than one testing stage (alpha -> beta -> production, maybe).
+* `environments` holds (under each subkey `alpha` and `production`):
+
+Key | Specifies
+--- | ---------
+awsEnvironment | EB Environment name
+promoteFrom | Which EB Environment to use as the basis of `publish` (production only, 'natch)
+
+
+### Type-specific Configuration
+
+#### static
+* `htmlSource` contains your vanilla HTML.
+
+### eleventy
+* `htmlSource` contains your eleventy-supported sources (.md, .html, .njk, etc).
+
+#### flask
+* `htmlSource` contains your application code (.py).
+* You configure your Flask environment with the `flask` key under `ehTemplate`.
 
 Key | Specifies
 --- | ---------
 port | Port the Flask server will run on. This will be proxied by BrowserSync; you'll still browse to _localhost:`ehTemplate.httpPort`._
 venv | If you're using a VirtualEnv, this is the corresponding "run something in the venv" command. For poetry, "poetry run"; for Pipenv, "pipenv run". If you're not, don't include this key. [And then learn about why you SHOULD be using a venv](https://realpython.com/python-virtual-environments-a-primer/#why-the-need-for-virtual-environments).
-envvars | Dict of varname-value pairs, i.e. `{ "FLASK_APP": "site/applications.py", "FLASK_ENV": "development" }`
+envvars | Dictionary of enviroment variables to set, i.e. `{ "FLASK_APP": "site/applications.py", "FLASK_ENV": "development" }`
 
 ## Development - Stuff you can run
 Once the tooling is in place, from the cloned repo, you can run:
@@ -68,5 +102,5 @@ Once the tooling is in place, from the cloned repo, you can run:
   * `gulp update` - update the gulpfile itself from the template.
 
 <sub><sup>
-Built from template version 1.0.1.
+Built from template version 1.3.0.
 </sub></sup>
