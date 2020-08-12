@@ -14,6 +14,8 @@ via the [Serverless](https://www.serverless.com) toolchain.
 You can enable any of the included lambdas by adding them to the
 `ehTemplate.lambdas` key in `package.json` after editing them appropriately.
 
+**Note: not yet. You'll have to manually deploy updated lambdas with `serverless deploy`. It's a work in progress**
+
 ### contact-form-submission
 
 This function is invoked from the website when the contact form is submitted. It

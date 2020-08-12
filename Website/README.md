@@ -81,7 +81,7 @@ promoteFrom | Which EB Environment to use as the basis of `publish` (production 
 * `htmlSource` contains your eleventy-supported sources (.md, .html, .njk, etc).
 
 #### flask
-* `htmlSource` contains your application code (.py).
+* `htmlSource` contains your application code (.py). Put `application.py` here, at least.
 * You configure your Flask environment with the `flask` key under `ehTemplate`.
 
 Key | Specifies

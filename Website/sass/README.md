@@ -62,10 +62,10 @@ Every time you want to write a `@media... ` instead write something like:
   }
 ```
 
-#### sass/lib -- Elements
+#### sass/element -- Elements
 We adhere to the least-possible-css philosophy, so we don't include the kitchen
 sink, until we need it. So in this section, uncomment any element(s) you want to
 use in your markup.
 
-### sass/components -- Modules/Block/Components/Whatever-you-like-to-call-it
+### sass/component -- Modules/Block/Components/Whatever-you-like-to-call-it
 Finally, these are your intent-specific components.
