@@ -3,23 +3,24 @@
 The intent is to add functionality as my project list demands it. So this is
 *highly* subject to change.
 
-My philosophy when creating a site for a client is that they should own the
-entire thing, and not need another HPC to figure it out. So, I put everything,
-including the code repo, into their AWS account, and access the site's resources
-via an external role. Then, when the proverbial bus tolls its bell for me, they
-aren't dependant on "figuring out" what I've done.
-
-## Milestones/To Dos
+## Future Features/To Dos
 
 1. Flesh out the template
-    * **In progress:** Flesh out sass/elements/*
+    * Flesh out sass/element/* **In progress**
     * We are linking to /static/... in several places; templatize this (also in create-ehproject.)
     * Add ARIA tags where appropriate.
-1. Add site versioning.
-    * See maybe [eh-bumpversion](https://www.npmjs.com/package/eh-bumpversion)
-1. Add ElasticBeanstalk support to `gulpfile`
+1. Add auto-versioning.
+    * See (maybe) [eh-bumpversion](https://www.npmjs.com/package/eh-bumpversion)
+    * We'll need something in `package.json` to indicate if we auto-bump during `build`, and how to.
+    * This means we should probably expose a `bump` task as well.
+1. ~~Add ElasticBeanstalk support to `gulpfile`~~ **Completed**
+1. Add auto-deploy of lambda functions during `publish`.
+1. Add a "hybrid" project type, with two (or more?) concurrent build systems.
+    * I see this as a meta-project launching `gulp dev` in n-many sub-directories of the meta-project.
+    * Ideally these would launch in new terminal windows.
+    * Even more ideally this behavior would be configurable.
 1. Add support for file combining with [gulp-useref](https://www.npmjs.com/package/gulp-useref)
-1. **Completed:** Automate creation of the icon pack. See [gulp-favicons](https://www.npmjs.com/package/gulp-favicons)
+1. ~~Automate creation of the icon pack. See [gulp-favicons](https://www.npmjs.com/package/gulp-favicons)~~ **Completed**
 1. Automate sitemap creation/update. See [sitemap-generator-cli](https://www.npmjs.com/package/sitemap-generator-cli)
 1. Automate creation of the site image at {{siteURL}}/{{static}}/img/site_image.jpg (referenced my meta-tag in index)
 1. Add pre-defined testing targets:

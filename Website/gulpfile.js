@@ -159,6 +159,14 @@ function jsCompile() {
 }
 
 
+/** Deploy any updated lambdas to AWS */
+function lambdaDeploy() {
+  // Scan each subdir of ./Website/lamdba which is listed under `ehTemplate.lambdas`
+  // Get the artifact name from .../.serverless/serverless-state.json under `service.artifact`
+  // Deploy if any source file (*.js, *.py, serverless.yml) is NEWER than the artifact file using `serverless deploy`
+}
+
+
 /** Manipulate source Sass into CSS for the target environment */
 function sassCompile() {
   var sasscfg = {}
@@ -356,6 +364,7 @@ exports.publish = (cb) => {
   cb()
 }
 
+
 /**
  * updates THIS GULPFILE from the template source
  *
@@ -383,6 +392,7 @@ exports.update = (cb) => {
     cb(e)
   })
 }
+
 
 /**
  * displays the version of THIS GULPFILE
