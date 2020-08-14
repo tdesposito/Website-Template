@@ -9,10 +9,12 @@
  * @license MIT
  */
 
- const { exec, execSync, spawn, spawnSync } = require('child_process')
- const del = require('del')
- const fs = require('fs')
- const https = require('https')
+const version = '1.3.1'
+
+const { exec, execSync, spawn, spawnSync } = require('child_process')
+const del = require('del')
+const fs = require('fs')
+const https = require('https')
 
 const { dest, parallel, series, src, watch } = require('gulp')
 const favicons = require('gulp-favicons')
@@ -257,6 +259,12 @@ function syncS3(cfg, envcfg) {
  * @module build
  */
 exports.build = (cb) => {
+  if (cfg.isSubProject) {
+    console.error('\n\n\tThis is a sub-project; use "gulp build" in the parent directory!\n\n')
+    cb(false)
+    return false
+  }
+
   // TODO: Bump Version ?
   setRunMode('build')
   return series(
@@ -295,7 +303,7 @@ exports.default = (cb) => {
       watch(`${cfg.htmlSource}/**/*.html`).on('change', cfg.BrowserSync.reload)
       break
     case "eleventy":
-      watch(`${cfg.htmlSource}/**/*.{html,njk,md}`, {ignoreInitial: false}).on('change', htmlCompile)
+      watch(`${cfg.htmlSource}/**/*.{html,njk,md}`, {ignoreInitial: false}, htmlCompile)
       break
     case "flask":
       Object.keys(cfg.flask.envvars).forEach(k => {
@@ -328,7 +336,12 @@ exports.dev = exports.default
  * @module deploy
  */
 exports.deploy = (cb) => {
-  // This deploys the site to the "alpha" site configuration
+  if (cfg.isSubProject) {
+    console.error('\n\n\tThis is a sub-project; use "gulp deploy" in the parent directory!\n\n')
+    cb(false)
+    return false
+  }
+
   switch (cfg.hosting) {
     case "s3hosted":
       syncS3(cfg, cfg.environments.alpha)
@@ -349,7 +362,12 @@ exports.deploy = (cb) => {
  * @module publish
  */
 exports.publish = (cb) => {
-  // This deploys the site to the "production" site configuration
+  if (cfg.isSubProject) {
+    console.error('\n\n\tThis is a sub-project; use "gulp publish" in the parent directory!\n\n')
+    cb(false)
+    return false
+  }
+
   // TODO: Update sitemap
   switch (cfg.hosting) {
     case "s3hosted":
@@ -371,15 +389,25 @@ exports.publish = (cb) => {
  * @module update
  */
 exports.update = (cb) => {
-  const url = "https://raw.githubusercontent.com/tdesposito/Website-Template/master/Website/gulpfile.js"
-  const outfile = fs.createWriteStream("new-gulpfile.js")
+  if (cfg.isSubProject) {
+    console.error('\n\n\tThis is a sub-project; use "gulp update" in the parent directory!\n\n')
+    cb(false)
+    return false
+  }
+
+  const url = 'https://raw.githubusercontent.com/tdesposito/Website-Template/master/Website/gulpfile.js'
+  const outfile = fs.createWriteStream('new-gulpfile.js')
   const req = https.get(url, (rsp) => {
     if (rsp.statusCode === 200) {
       rsp.pipe(outfile)
       outfile.on('finish', () => {
         outfile.close()
-        fs.copyFileSync("new-gulpfile.js", "gulpfile.js")
-        fs.unlinkSync("new-gulpfile.js")
+        fs.copyFileSync('new-gulpfile.js', 'gulpfile.js')
+        if (cfg.type === 'hybrid') {
+          fs.copyFileSync('new-gulpfile.js', 'frontend/gulpfile.js')
+          fs.copyFileSync('new-gulpfile.js', 'backend/gulpfile.js')
+        }
+        fs.unlinkSync('new-gulpfile.js')
         console.log('Updated gulpfile.js')
         cb()
       })
@@ -400,7 +428,6 @@ exports.update = (cb) => {
  * @module version
  */
 exports.version = (cb) => {
-  const version = "1.3.1"
   console.log(`EH-Gulpfile version ${version}`)
   cb()
 }

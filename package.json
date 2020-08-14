@@ -14,7 +14,7 @@
       },
       {
         "file": "Website/gulpfile.js",
-        "search": "  const version = \"{{version}}\""
+        "search": "const version = '{{version}}'"
       },
       {
         "file": "Website/README.md",

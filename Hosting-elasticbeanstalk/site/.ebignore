@@ -1,0 +1,8 @@
+# Ignore these files when creating an app bundle
+
+# Git
+.git/
+.gitignore
+
+# utility files
+README.md
