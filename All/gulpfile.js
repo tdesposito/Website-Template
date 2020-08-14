@@ -259,12 +259,6 @@ function syncS3(cfg, envcfg) {
  * @module build
  */
 exports.build = (cb) => {
-  if (cfg.isSubProject) {
-    console.error('\n\n\tThis is a sub-project; use "gulp build" in the parent directory!\n\n')
-    cb(false)
-    return false
-  }
-
   // TODO: Bump Version ?
   setRunMode('build')
   return series(
@@ -336,12 +330,6 @@ exports.dev = exports.default
  * @module deploy
  */
 exports.deploy = (cb) => {
-  if (cfg.isSubProject) {
-    console.error('\n\n\tThis is a sub-project; use "gulp deploy" in the parent directory!\n\n')
-    cb(false)
-    return false
-  }
-
   switch (cfg.hosting) {
     case "s3hosted":
       syncS3(cfg, cfg.environments.alpha)
@@ -362,12 +350,6 @@ exports.deploy = (cb) => {
  * @module publish
  */
 exports.publish = (cb) => {
-  if (cfg.isSubProject) {
-    console.error('\n\n\tThis is a sub-project; use "gulp publish" in the parent directory!\n\n')
-    cb(false)
-    return false
-  }
-
   // TODO: Update sitemap
   switch (cfg.hosting) {
     case "s3hosted":
@@ -389,12 +371,6 @@ exports.publish = (cb) => {
  * @module update
  */
 exports.update = (cb) => {
-  if (cfg.isSubProject) {
-    console.error('\n\n\tThis is a sub-project; use "gulp update" in the parent directory!\n\n')
-    cb(false)
-    return false
-  }
-
   const url = 'https://raw.githubusercontent.com/tdesposito/Website-Template/master/Website/gulpfile.js'
   const outfile = fs.createWriteStream('new-gulpfile.js')
   const req = https.get(url, (rsp) => {
@@ -403,10 +379,6 @@ exports.update = (cb) => {
       outfile.on('finish', () => {
         outfile.close()
         fs.copyFileSync('new-gulpfile.js', 'gulpfile.js')
-        if (cfg.type === 'hybrid') {
-          fs.copyFileSync('new-gulpfile.js', 'frontend/gulpfile.js')
-          fs.copyFileSync('new-gulpfile.js', 'backend/gulpfile.js')
-        }
         fs.unlinkSync('new-gulpfile.js')
         console.log('Updated gulpfile.js')
         cb()
