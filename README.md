@@ -11,6 +11,8 @@ IT to create and configure your new project.
 See [the Road Map](ROADMAP.md) for future plans and current limitations.
 
 See [the Template's README](All/README.md) for how the as-created project works.
+Please don't forget that file is, itself, a template, so anything like `{{words}}`
+will be replaced during project creation.
 
 ## Project Structure
 
