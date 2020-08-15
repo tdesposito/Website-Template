@@ -291,6 +291,8 @@ exports.clean = (cb) => {
  * @module dev
  */
 exports.default = (cb) => {
+  let frontserver
+  let backserver
   setRunMode('dev')
   switch (cfg.type) {
     case "static":
@@ -307,8 +309,11 @@ exports.default = (cb) => {
       if (cfg.flask.venv) {
         cfg.flask.venv.split(' ').reverse().forEach(e => flaskcmd.unshift(e))
       }
-      var flasksrv = spawn(flaskcmd[0], flaskcmd.slice(1), {stdio: 'inherit'})
+      backserver = spawn(flaskcmd[0], flaskcmd.slice(1), {stdio: 'inherit'})
       watch(`${cfg.htmlSource}/**/*.{html,jinja2,j2}`).on('change', cfg.BrowserSync.reload)
+      break
+    case "react":
+      frontserver = spawn('npx', `webpack-dev-server --mode development --open --hot --port 4050`.split(' '), {stdio: 'inherit', shell: true})
       break
     default:
       console.log(`\n\n\tI don't know how serve ${cfg.type} sites yet. Sorry.\n\n`)
@@ -371,7 +376,7 @@ exports.publish = (cb) => {
  * @module update
  */
 exports.update = (cb) => {
-  const url = 'https://raw.githubusercontent.com/tdesposito/Website-Template/master/Website/gulpfile.js'
+  const url = 'https://raw.githubusercontent.com/tdesposito/Website-Template/master/All/gulpfile.js'
   const outfile = fs.createWriteStream('new-gulpfile.js')
   const req = https.get(url, (rsp) => {
     if (rsp.statusCode === 200) {

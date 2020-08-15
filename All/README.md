@@ -91,8 +91,13 @@ venv | If you're using a VirtualEnv, this is the corresponding "run something in
 envvars | Dictionary of enviroment variables to set, i.e. `{ "FLASK_APP": "site/applications.py", "FLASK_ENV": "development" }`
 
 #### hybrid
-* There will be two additional folders, `frontend` and `backend`, in the project directory.
+
+**_This is still a work in progress. Enter at your own risk!_**
+
 * There will be two additional keys (yes, `frontend` and `backend`) which specify the type (as above) of the frontend and backend apps.
+* There will be two additional folders, `frontend` and `backend`, in the project directory.
+  * Your source code for the back end (server) process goes in `backend` rather than `site`.
+  * Your source code for the front end (web app) process goes in `frontend` rather than `site`.
 
 ## Development - Stuff you can run
 Once the tooling is in place, from the cloned repo, you can run:
