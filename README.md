@@ -15,7 +15,7 @@ See [the Template's README](All/README.md) for how the as-created project works.
 ## Project Structure
 
 The top-level directories each represent a different portion of a project,
-which, when cobbled together, fully expresses the development environment.
+which, when cobbled together, fully express the development environment.
 
 #### /All/
 All of the files herein are part of EVERY project.
