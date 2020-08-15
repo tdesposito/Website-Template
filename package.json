@@ -9,15 +9,15 @@
   "ehVersioner": {
     "targets": [
       {
-        "file": "Website/gulpfile.js",
+        "file": "All/gulpfile.js",
         "search": " * @version {{version}}"
       },
       {
-        "file": "Website/gulpfile.js",
+        "file": "All/gulpfile.js",
         "search": "const version = '{{version}}'"
       },
       {
-        "file": "Website/README.md",
+        "file": "All/README.md",
         "search": "Built from template version {{version}}."
       }
     ]
