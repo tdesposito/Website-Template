@@ -63,7 +63,7 @@ url | S3 bucket URL (optional) **currently unused, but I have plans for it**
 #### elasticbeanstalk
 
 * `gulp deploy` creates a new application bundle labeled with the current source version (from `package.json`), so be sure to bump your version prior to `gulp build`ing your site. If you don't, EB will try to use the EXISTING such bundle, and you'll shortly need Rogaine.
-* If you inlcude `promoteFrom` under `production` (see below), we'll use the same application bundle already running in your alpha environment. `promoteFrom` MUST contain the alpha Environment name for this to work. This is coded this way to allow for more than one testing stage (alpha -> beta -> production, maybe).
+* If you include `promoteFrom` under `production` (see below), we'll use the same application bundle already running in the named environment. `promoteFrom` MUST contain an Environment name for this to work. This may one day allow for more than one testing stage (alpha -> beta -> production, maybe).
 * `environments` holds (under each subkey `alpha` and `production`):
 
 Key | Specifies

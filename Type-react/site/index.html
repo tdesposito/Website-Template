@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <!-- ## site settings:  -->
+    <link rel="canonical" href="{{siteURL}}">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="{{siteDescription}}">
+
+    <!-- ## site icon: -->
+    <link rel="manifest" href="/static/icon/site.webmanifest">
+    <link rel="shortcut icon" type="image/vnd.microsoft.icon" href="/static/icon/favicon.ico">
+    <link rel="shortcut icon" type="image/x-icon" href="/static/icon/favicon.ico">
+    <link rel="apple-touch-icon" sizes="180x180" href="/static/icon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/static/icon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/static/icon/favicon-16x16.png">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="theme-color" content="#ffffff">
+
+    <!-- ## Schema.org tags (SEO) -->
+    <meta itemprop="name" content="{{siteName}}"/>
+    <meta itemprop="url" content="{{siteURL}}">
+    <meta itemprop="description" content="{{siteDescription}}">
+    <script type="application/ld+json">
+    {
+      "@context": "http://schema.org",
+      "@type": ""
+    }
+    </script>
+
+    <!-- ## OpenGraph tags (Facebook/Twitter/etc)-->
+    <meta property="og:title" content="{{siteName}}">
+    <meta property="og:url" content="{{siteURL}}">
+    <meta property="og:type" content="website">
+    <meta property="og:description" content="{{siteDescription}}">
+    <meta name="twitter:card" content="{{siteURL}}/static/img/site_image.jpg">
+    <!-- ## CSS/font config: -->
+  </head>
+  <body>
+    <div id="react-root"></div>
+    <script src="index_bundle.js"></script>
+  </body>
+</html>
