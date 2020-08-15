@@ -299,7 +299,7 @@ exports.default = (cb) => {
       watch(`${cfg.htmlSource}/**/*.html`).on('change', cfg.BrowserSync.reload)
       break
     case "eleventy":
-      watch(`${cfg.htmlSource}/**/*.{html,njk,md}`, {ignoreInitial: false}, htmlCompile)
+      watch(`${cfg.htmlSource}/**/*.{html,njk,md}`, {ignoreInitial: false}, htmlCompile).on('change', htmlCompile)
       break
     case "flask":
       Object.keys(cfg.flask.envvars).forEach(k => {
