@@ -4,12 +4,12 @@
  * Configuration is under the "ehTemplate" key in package.json
  *
  * @author Todd D. Esposito <todd@espositoholdings.com>
- * @version 1.3.1
+ * @version 2.0.0
  * @copyright Todd D. Esposito 2020
  * @license MIT
  */
 
-const version = '1.3.1'
+const version = '2.0.0'
 
 const { exec, execSync, spawn, spawnSync } = require('child_process')
 const del = require('del')
