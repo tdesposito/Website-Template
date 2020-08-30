@@ -40,7 +40,7 @@ htmlSource | Whence source documents (default: `site`). See notes below.
 httpPort | Port for the dev server (default: 8001).
 imgSource | Whence png and jpg images (default: `assets`).
 jsSource | Whence JavaScript source code (default: `jssrc`).
-lambdas | List of lambda functions to auto-deploy. **Not yet implemented.**
+lambdas | List of lambda functions to deploy. **Not entirely implemented. See below.**
 roleARN | The ARN of the external role for the client (or empty).
 sassSource | Whence Sass source code (default: `sass`).
 serverDir | Temp dir from which to serve dev content (default: `temp`).
