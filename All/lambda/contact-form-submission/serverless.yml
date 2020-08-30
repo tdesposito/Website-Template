@@ -33,3 +33,9 @@ functions:
           method: post
           path: newcontact
           cors: true
+
+resources:
+  Resources:
+    SendContactFormLogGroup:
+      Properties:
+        RetentionInDays: "7"
