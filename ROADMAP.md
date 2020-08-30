@@ -15,6 +15,7 @@ The intent is to add functionality as my project list demands it. So this is
     * See (maybe) [eh-bumpversion](https://www.npmjs.com/package/eh-bumpversion)
     * We'll need something in `package.json` to indicate if we auto-bump during `build`, and how to.
     * This means we should probably expose a `bump` task as well.
+    * And we should also (optionally) call out to a changelog generator. See [generate-changelog](https://www.npmjs.com/package/generate-changelog).
 1. ~~Add ElasticBeanstalk support to `gulpfile`~~ **Completed**
 1. ~~Add deploy of lambda functions.~~ **Completed**
 1. Add auto-deploy of lambda functions during `deploy` and `publish`.
