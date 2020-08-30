@@ -38,6 +38,14 @@ function safeRequire(pkg) {
         console.warn(`\t\t npm install --save-dev ${pkg}`)
         cb()
       }
+      exports.dev = exports.default
+      exports.build = exports.default
+      exports.clean = exports.default
+      exports.deploy = exports.default
+      exports.lambdas = exports.default
+      exports.publish = exports.default
+      exports.update = exports.default
+      exports.version = exports.default
     }
   }
   return null
