@@ -17,6 +17,7 @@ const fs = require('fs')
 const https = require('https')
 
 const { dest, parallel, series, src, watch } = require('gulp')
+
 const favicons = require('gulp-favicons')
 const htmlmin = require('gulp-htmlmin')
 const image = require('gulp-imagemin')
@@ -162,10 +163,26 @@ function jsCompile() {
 
 
 /** Deploy any updated lambdas to AWS */
-function lambdaDeploy() {
-  // Scan each subdir of ./Website/lamdba which is listed under `ehTemplate.lambdas`
-  // Get the artifact name from .../.serverless/serverless-state.json under `service.artifact`
-  // Deploy if any source file (*.js, *.py, serverless.yml) is NEWER than the artifact file using `serverless deploy`
+function lambdaDeploy(cb) {
+  cfg.lambdas.forEach(dir => {
+    let codetime = 0, deploytime = 0
+    try {
+      fs.readdirSync(`lambda/${dir}`).forEach(filename => {
+        if (filename === '.serverless') {
+          deploytime = fs.statSync(`lambda/${dir}/${filename}`).mtime
+        } else {
+          codetime = Math.max(codetime, fs.statSync(`lambda/${dir}/${filename}`).mtime)
+        }
+      })
+      if (codetime > deploytime) {
+        console.log(`\t Deploying ${dir}`)
+        spawnSync('serverless', ['deploy'], {stdio: 'inherit', shell: true, cwd: `lambda/${dir}`})
+      }
+    } catch (error) {
+      console.error(`\nError while checking lambda "${dir}"; is it configured correctly?\n\t${error}`)
+    }
+  })
+  cb()
 }
 
 
@@ -350,7 +367,17 @@ exports.deploy = (cb) => {
 
 
 /**
- * deploy the production build to the production (live) environment.
+ * deploy updated lambdas.
+ *
+ * @module lambdas
+ */
+exports.lambdas = cb => {
+  return lambdaDeploy(cb)
+}
+
+
+/**
+ * deploy the build to the production (live) environment.
  *
  * @module publish
  */

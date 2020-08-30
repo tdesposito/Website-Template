@@ -8,9 +8,9 @@ more details.
 ```
   /
   - README.md - this file
-  - assets/ - original pictures, videos, etc. Not optimized for web.
+  - assets/ - original pictures, videos, etc. Not optimized for web
   - jssrc/ - javascript source code
-  - lambda/ - source code for Lambda functions. Managed with `serverless`
+  - lambda/ - source code for Lambda functions, managed with `serverless`
   - sass/ - source code for building site CSS
   - site/ - source html, etc
 ```
@@ -23,7 +23,7 @@ already have, naturally.
   * `git clone codecommit://{{profile}}@{{siteName}}-Website` in your project folder. This relies on setting [AWS CodeCommit-specific configuration](https://docs.aws.amazon.com/codecommit/latest/userguide/cross-account.html).
   * `npm install --global gulp-cli` for [Gulp](https://gulpjs.com).
   * From the cloned repo: `npm install` to get Gulp and all our tools.
-  * `npm install -g serverless` to get [Serverless](https://serverless.com) to manage the Lambda functions, if you're using them.
+  * `npm install -g serverless` to get [Serverless](https://serverless.com) to manage Lambda functions, if you're using them.
   * Optionally edit `ehTemplate.httpPort` in `package.json` to change the dev server's port from 8001.
 
 ## Configuration
@@ -104,7 +104,8 @@ Once the tooling is in place, from the cloned repo, you can run:
   * `gulp` (or `gulp dev`) - launches a test server (with live-reload), starts your site and watches for changes.
   * `gulp clean` - cleans the `build/` directory.
   * `gulp build` - creates a production build in `build/`.
-  * `gulp deploy` - deploys the as-built site to your ALPHA (testing) environment.
+  * `gulp lambdas` - deploys your listed lambda functions to AWS.
+  * `gulp deploy` - deploys the as-built site to your ALPHA (testing) environment. **_Doesn't do lambdas yet. You can add `lambdas` to the line below for now._**
   * `gulp --series build deploy` - builds then deploys to ALPHA.
   * `gulp publish` - deploys the as-built site to your PRODUCTION environment.
   * `gulp version` - displays the version of the gulpfile itself.
