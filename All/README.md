@@ -88,7 +88,7 @@ Key | Specifies
 --- | ---------
 port | Port the Flask server will run on. This will be proxied by BrowserSync; you'll still browse to _localhost:`ehTemplate.httpPort`._
 venv | If you're using a VirtualEnv, this is the corresponding "run something in the venv" command. For poetry, "poetry run"; for Pipenv, "pipenv run". If you're not, don't include this key. [And then learn about why you SHOULD be using a venv](https://realpython.com/python-virtual-environments-a-primer/#why-the-need-for-virtual-environments).
-envvars | Dictionary of enviroment variables to set, i.e. `{ "FLASK_APP": "site/applications.py", "FLASK_ENV": "development" }`
+envvars | Dictionary of enviroment variables to set, i.e. `{ "FLASK_APP": "site/application.py", "FLASK_ENV": "development" }`
 
 #### hybrid
 
