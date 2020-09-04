@@ -112,5 +112,5 @@ Once the tooling is in place, from the cloned repo, you can run:
   * `gulp update` - update the gulpfile itself from the template.
 
 <sub><sup>
-Built from template version 2.1.0.
+Built from template version 2.2.0.
 </sub></sup>
