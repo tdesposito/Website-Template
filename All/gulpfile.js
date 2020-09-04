@@ -129,7 +129,7 @@ if (exports.default === undefined) {
 
 
   /** Manipulate source html (or whatever) for the target environment */
-  function htmlCompile() {
+  function htmlCompile(cb) {
     var htmlmincfg = {
       collapseWhitespace: true,
       minifyCSS: true,
@@ -148,6 +148,11 @@ if (exports.default === undefined) {
         case 'flask':
           pipeline = src([`${cfg.CompileTo}/**/*`, `!${cfg.CompileTo}/${cfg.staticDir}/**/*`])
           break
+        case 'react':
+          var webpack = require('webpack')
+          var webpackConfig = require('./webpack.config')
+          webpackConfig.mode = 'production'
+          return webpack(webpackConfig).run(cb)
         default:
           pipeline = src(`${cfg.CompileTo}/**/*.html`)
           .pipe(htmlmin(htmlmincfg))
@@ -262,10 +267,32 @@ if (exports.default === undefined) {
         port: cfg.httpPort || 8001,
         ui: {port: 4444},
       }
-      if (cfg.type === 'flask') {
-        bscfg.proxy = `localhost:${cfg.flask.port}`
-      } else {
-        bscfg.server = cfg.CompileTo
+
+      switch(cfg.type) {
+        case 'flask':
+          bscfg.proxy = `localhost:${cfg.flask.port}`
+          break
+        case 'react':
+          var webpack = require('webpack')
+          var webpackDevMiddleware = require('webpack-dev-middleware')
+          var webpackHotMiddleware = require('webpack-hot-middleware')
+          var webpackConfig = require('./webpack.config')
+          var bundler = webpack(webpackConfig)
+          bscfg.server = {
+            baseDir: cfg.CompleTo,
+            middleware: [
+              webpackDevMiddleware(bundler, {
+                  publicPath: webpackConfig.output.publicPath,
+                  stats: { colors: true },
+                }),
+              webpackHotMiddleware(bundler),
+            ],
+          }
+          bscfg.files = ['site/**/*.css', 'site/**/*.html']
+          break
+        default:
+          bscfg.server = cfg.CompileTo
+          break
       }
       cfg.BrowserSync.init(bscfg)
     } else {
@@ -340,9 +367,6 @@ if (exports.default === undefined) {
     let backserver
     setRunMode('dev')
     switch (cfg.type) {
-      case "static":
-        watch(`${cfg.htmlSource}/**/*.html`).on('change', cfg.BrowserSync.reload)
-        break
       case "eleventy":
         watch(`${cfg.htmlSource}/**/*.{html,njk,md}`, {ignoreInitial: false}, htmlCompile).on('change', htmlCompile)
         break
@@ -358,7 +382,10 @@ if (exports.default === undefined) {
         watch(`${cfg.htmlSource}/**/*.{html,jinja2,j2}`).on('change', cfg.BrowserSync.reload)
         break
       case "react":
-        frontserver = spawn('npx', `webpack-dev-server --mode development --open --hot --port 4050`.split(' '), {stdio: 'inherit', shell: true})
+        // Nothing to do here. BrowserSync was configued for React in setRunMode()
+        break
+      case "static":
+        watch(`${cfg.htmlSource}/**/*.html`).on('change', cfg.BrowserSync.reload)
         break
       default:
         console.log(`\n\n\tI don't know how serve ${cfg.type} sites yet. Sorry.\n\n`)

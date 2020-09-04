@@ -1,36 +1,41 @@
-const path = require('path');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
+const path = require('path')
+
+const webpack = require('webpack')
+const htmlplugin = require('html-webpack-plugin')
 
 module.exports = {
-   entry: './{{frontendSource}}/index.js',
-   output: {
-      path: path.join(__dirname, '{{frontendBuildTarget}}'),
-      filename: 'index_bundle.js'
-   },
-   devServer: {
-      inline: true,
-      port: 8001
-   },
-   module: {
-      rules: [
-         {
-            test: /\.jsx?$/,
-            exclude: /node_modules/,
-            loader: 'babel-loader',
-            query: {
-               presets: ['@babel/env', '@babel/react']
-            }
-         },
-         {
-           test: /\.css$/,
-           exclude: /node_modules/,
-           use: ['style-loader', 'css-loader'],
-         },
-      ],
-   },
-   plugins:[
-      new HtmlWebpackPlugin({
-         template: './{{frontendSource}}/index.html'
-      })
-   ]
+  mode: 'none',
+  entry: [
+    'webpack/hot/dev-server',
+    'webpack-hot-middleware/client',
+    'react-hot-loader/patch',
+    './{{frontendSource}}/index.js'
+  ],
+  plugins: [
+    new htmlplugin({template: './{{frontendSource}}/index.html'}),
+    new webpack.HotModuleReplacementPlugin(),
+  ],
+  resolve: {
+    alias: {
+      'react-dom': '@hot-loader/react-dom',
+    },
+  },
+  module: {
+    rules: [
+      {
+        test: /\.jsx?$/,
+        exclude: /node_modules/,
+        loader: ['react-hot-loader/webpack', 'babel-loader'],
+      },
+      {
+        test: /\.css$/,
+        exclude: /node_modules/,
+        use: ['style-loader', 'css-loader'],
+      },
+    ],
+  },
+  output: {
+    path: path.join(__dirname, '{{frontendBuildTarget}}'),
+    filename: 'bundle.js'
+  },
 }

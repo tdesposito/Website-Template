@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 
-export const App = () => {
+export default () => {
   return (
   <>
     <header>

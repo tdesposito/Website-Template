@@ -1,8 +1,18 @@
+// "hot" is used to wire up the hot-reload features of the dev server, and
+// optimizes away to near-nothing in production. Putting it here enables
+// hot-reload for your entire application, without you having to do anything to
+// your code.
+
+import { hot } from 'react-hot-loader/root'
 import React from 'react'
 import ReactDOM from 'react-dom'
 
-import '../site/static/css/main.min.css'
+import './static/css/main.min.css'
 
-import {App} from './Application.js'
+// This grabs your default export from Application.js, which should be the root
+// component of your application. If you want to change this, be sure to wrap
+// whatever your new root component is with "hot"!
+import App from './Application.js'
 
-ReactDOM.render(<App />, document.getElementById('react-root'))
+const HotApp = hot(App)
+ReactDOM.render(<HotApp />, document.getElementById('react-root'))
